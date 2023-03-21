@@ -1,0 +1,63 @@
+<section class="py-10 bg-gray-100">
+    <div class="mx-auto grid max-w-6xl  grid-cols-1 gap-6 p-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        {% for product in products %}
+            <!-- <article class="w-full max-w-sm rounded-xl bg-white p-3 shadow-lg hover:shadow-xl hover:transform hover:scale-105 duration-300 dark:bg-gray-800 dark:border-gray-700 ">
+                <a href="{% url 'product_detail' product.category.slug product.slug %}">
+               
+                <div class="image ">
+                    <img class="h-full w-full object-cover " src="{{ product.image.url }}" alt="Image of {{product.title}}" />
+                </div>
+                
+        
+        
+                <div class="mt-1 p-2">
+                    <h2 class="text-slate-700 dark:text-white text-xl font-semibold tracking-tight">{{product.title}}</h2>
+                    <p class="mt-1 text-sm text-slate-400 dark:text-white">{{product.description}}</p>
+        
+                    <div class="flex items-center justify-between">
+                        <p>
+                            <span class="text-l font-bold text-blue-500">ETB {{ product.get_display_price }}</span>
+                        </p>
+        
+                        <div class="flex items-center space-x-1.5 rounded-lg bg-blue-700 px-4 py-1.5 text-white duration-100 hover:bg-blue-800">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-4 w-4">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
+                            </svg>
+            
+                            <button class="text-sm">Add to cart</button>
+                        </div>
+                    </div>
+                </div>
+                </a>
+            </article>  -->
+            
+            
+            <div class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 hover:shadow-xl hover:transform hover:scale-105 duration-300">
+                <a href="{% url 'product_detail' product.category.slug product.slug %}">
+                    <div class="">
+                        <img class="rounded-t-lg" src="{{ product.get_thumbnail }}" alt="product image" />
+                    </div>    
+                </a>
+                <div class="px-5 pb-5">
+                    <a href="{% url 'product_detail' product.category.slug product.slug %}">
+                        <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">{{product.title}}</h5>
+                    </a>
+                    <div class="flex items-center mt-2.5 mb-5">
+                        <p class="mt-1 text-sm text-slate-400 dark:text-white dark:text-white">{{product.description}}</p>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <p>
+                            <span class="text-l font-bold text-gray-900 dark:text-white">ETB {{ product.get_display_price }}</span>
+                        </p>
+                        <a href="{% url 'add_to_cart' product.id %}" class="flex items-center text-white space-x-1.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-4 w-4">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
+                                </svg>
+                                Add to cart</a>
+                    </div>
+                </div>
+            </div>
+
+            
+        {% endfor %}
+</section>

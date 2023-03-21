@@ -1,0 +1,99 @@
+{% extends 'core/layout.html' %}
+
+{% block title %} {{product.title}} {% endblock %}
+
+{% block body %}
+
+<!-- <section class="text-gray-700 body-font overflow-hidden bg-white">
+    <div class="container px-5 py-24 mx-auto">
+      <div class="lg:w-4/5 mx-auto flex flex-wrap">
+        <div class="image">
+          <img src="{{ product.image.url }}" alt="Image of {{product.title}}" />
+        </div>
+        <div class="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
+      
+          <h1 class="text-gray-900 text-3xl title-font font-medium mb-1">{{ product.title }}</h1>
+          <a href="{% url 'vendor_detail' product.user.id %}"><h2 class="text-sm title-font text-gray-500 tracking-widest">- {% firstof product.user.get_full_name product.user.username %}</h2></a>
+          
+          <p class="leading-relaxed">{{ product.description}}</p>
+          <div class="flex mt-6 items-center pb-5 border-b-2 border-gray-200 mb-5">
+            <div class="flex">
+              <span class="mr-3">Color</span>
+              <button class="border-2 border-gray-300 rounded-full w-6 h-6 focus:outline-none"></button>
+              <button class="border-2 border-gray-300 ml-1 bg-gray-700 rounded-full w-6 h-6 focus:outline-none"></button>
+              <button class="border-2 border-gray-300 ml-1 bg-red-500 rounded-full w-6 h-6 focus:outline-none"></button>
+            </div>
+            <div class="flex ml-6 items-center">
+              <span class="mr-3">Size</span>
+              <div class="relative">
+                <select class="rounded border appearance-none border-gray-400 py-2 focus:outline-none focus:border-red-500 text-base pl-3 pr-10">
+                  <option>SM</option>
+                  <option>M</option>
+                  <option>L</option>
+                  <option>XL</option>
+                </select>
+                <span class="absolute right-0 top-0 h-full w-10 text-center text-gray-600 pointer-events-none flex items-center justify-center">
+                  <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4" viewBox="0 0 24 24">
+                    <path d="M6 9l6 6 6-6"></path>
+                  </svg>
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="flex">
+            <span class="title-font font-medium text-2xl text-gray-900">ETB {{ product.get_display_price }}</span>
+            <a href="{% url 'add_to_cart' product.id %}">
+              <button class="flex ml-auto text-white bg-blue-500 border-0 py-2 px-6 focus:outline-none hover:bg-blue-600 rounded">Add to cart</button>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>  -->
+    
+  
+      <div class="2xl:container 2xl:mx-auto lg:py-16 lg:px-20 md:py-12 md:px-6 py-9 px-4">
+        <div class="flex justify-center items-center lg:flex-row flex-col gap-8">
+            <!-- Description Div -->
+
+            <div class="w-full sm:w-96 md:w-8/12 lg:w-6/12 items-center">
+                
+                <h2 class="font-semibold lg:text-4xl text-3xl lg:leading-9 leading-7 text-gray-800 ">{{product.title}}</h2>
+
+                <a href="{% url 'vendor_detail' product.user.id %}"><p class="font-normal text-base leading-6 text-blue-600  mt-7">- {% firstof product.user.get_full_name product.user.username %}</p></a>
+
+                <p class="font-normal text-base leading-6 text-gray-600  mt-7">{{product.description}}</p>
+                <p class="font-semibold lg:text-2xl text-xl lg:leading-6 leading-5 mt-6 ">ETB {{product.get_display_price}}</p>
+
+                <div class="lg:mt-11 mt-10">
+                    <div class="flex flex-row justify-between">
+                        <!-- <p class="font-medium text-base leading-4 text-gray-600 ">Select quantity</p>
+                        <div class="flex">
+                            <span onclick="minus()" class="focus:outline-none  focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 cursor-pointer border border-gray-300 border-r-0 w-7 h-7 flex items-center justify-center pb-1">-</span>
+                            <input id="counter" aria-label="input" class="border  border-gray-300  h-full text-center w-14 pb-1" type="text" value="1" />
+                            <span onclick="plus()" class="focus:outline-none  focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 cursor-pointer border border-gray-300 border-l-0 w-7 h-7 flex items-center justify-center pb-1">+</span>
+                        </div> -->
+                    </div>
+                    <hr class="bg-gray-200 w-full my-2" />
+                    
+                    
+                </div>
+                <a href="{% url 'add_to_cart' product.id %}">
+                  <button class="focus:outline-none focus:ring-2 hover:bg-blue-500 focus:ring-offset-2 focus:ring-gray-800 font-medium text-base leading-4 text-white bg-blue-800 w-full py-5 lg:mt-12 mt-6">Add to Cart</button>
+                </a>
+              </div>
+
+            <!-- Preview Images Div For larger Screen-->
+
+            <div class="w-full sm:w-96 md:w-8/12 lg:w-6/12 flex lg:flex-row flex-col lg:gap-8 sm:gap-6 gap-4">
+             <img src="{{product.image.url}}" alt="{{product.title}}" />
+                </div>
+                
+            </div>
+        </div>
+        
+
+
+
+
+{% endblock %}

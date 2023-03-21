@@ -1,0 +1,104 @@
+{% extends 'core/layout.html' %}
+
+{% block title %}Cart{% endblock %}
+
+{% block body %}
+   
+    <style>
+        @layer utilities {
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+        }
+    }
+    </style>
+
+    <body>
+    <div class="h-screen bg-gray-100 pt-4">
+        {% if cart|length %}
+            <h1 class="mb-10 text-center text-2xl font-bold">Cart Items</h1>
+        
+            <div class="mx-auto max-w-5xl justify-center px-6 md:flex md:space-x-6 xl:px-0">
+                <div class="rounded-lg md:w-2/3">
+                    
+                    {% for item in cart %}
+                        <div class="justify-between mb-6 rounded-lg bg-white p-6 shadow-md sm:flex sm:justify-start">
+                            <img src="{{ item.product.get_thumbnail}}" alt="product-image" class="w-full rounded-lg sm:w-40" />
+                            <div class="sm:ml-4 sm:flex sm:w-full sm:justify-between">
+                                <div class="mt-5 sm:mt-0">
+                                <h2 class="text-lg font-bold text-gray-900">{{ item.product.title }}</h2>
+                                <p class="mt-1 text-xs text-gray-700">{{ item.product.get_display_price }}</p>
+                                <div class="flex items-center pt-10 ">
+                                    <a href="{% url 'change_quantity' item.product.id %}?action=decrease">    
+                                        <span class="cursor-pointer rounded-l bg-gray-100 py-1 px-3.5 duration-100 hover:bg-blue-500 hover:text-blue-50"> - </span>
+                                    </a>
+                                    
+                                    <input class="h-8 w-8 border bg-white text-center text-xs outline-none" type="number" value="{{ item.quantity }}" min="1" />
+                                    <a href="{% url 'change_quantity' item.product.id %}?action=increase">
+                                        <span class="cursor-pointer rounded-r bg-gray-100 py-1 px-3 duration-100 hover:bg-blue-500 hover:text-blue-50"> + </span>
+                                    </a>
+                                      
+                                </div>
+                                </div>
+                                
+                                <div class="mt-4 flex justify-between sm:space-y-6 sm:mt-0 sm:block sm:space-x-6">
+                                <div class="flex items-end border-gray-100">
+                             
+                
+                                    <a href="{% url 'remove_from_cart' item.product.id %}">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-5 w-5 cursor-pointer duration-150 hover:text-red-500">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                        </svg>
+                                    </a> 
+                                </div>
+                                
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <!-- Sub total -->
+                <div class="mt-6 h-full rounded-lg border bg-white p-6 shadow-md md:mt-0 md:w-1/3">
+                    <div class="mb-2 flex justify-between">
+                    <p class="text-gray-700">Subtotal</p>
+                    <p class="text-gray-700">ETB {{ cart.get_total_cost }}</p>
+                    </div>
+                    <div class="flex justify-between">
+                    <p class="text-gray-700">Shipping</p>
+                    <p class="text-gray-700">ETB 0</p>
+                    </div>
+                    <hr class="my-4" />
+                    <div class="flex justify-between">
+                    <p class="text-lg font-bold">Total</p>
+                    <div class="">
+                        <p class="mb-1 text-lg font-bold">ETB {{ cart.get_total_cost }}</p>
+                        <p class="text-sm text-gray-700">including VAT</p>
+                    </div>
+                    </div>
+                    <a href="{% url 'checkout' %}" > 
+                        <button class="mt-6 w-full rounded-md bg-blue-500 py-1.5 font-medium text-blue-50 hover:bg-blue-600">Check out</button>
+                    </a> 
+                </div>
+            </div>
+        {% else %}
+            <section class="bg-white">
+                <div class="grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12">
+                    <div class="mr-auto place-self-center lg:col-span-7">
+                        <h1 class="max-w-2xl mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl xl:text-6xl ">Your Cart Is Currently Empty</h1>
+                        <p class="max-w-2xl mb-6 font-light text-gray-500 lg:mb-8 md:text-lg lg:text-xl">Must Add Items To Cart To Procced To CheckOut</p>
+                        
+                        <a href="{% url 'frontpage' %}" class="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center text-white border bg-blue-500 border-blue-300 rounded-lg hover:bg-blue-700 focus:ring-4 focus:ring-blue-100">
+                            Return To Shop
+                        </a> 
+                    </div>
+                    <div class="hidden lg:mt-0 lg:col-span-5 lg:flex">
+                        <img src="https://static-00.iconduck.com/assets.00/empty-cart-illustration-512x428-mcol2auz.png" alt="mockup">
+                    </div>                
+                </div>
+            </section>
+
+        {% endif %}
+    </div>
+    </body>
+{% endblock %}

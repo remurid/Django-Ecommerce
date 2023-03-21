@@ -1,0 +1,10 @@
+
+<nav class="relative w-full flex flex-wrap items-center justify-between px-6 py-3 bg-blue-600 text-gray-200 shadow-lg navbar navbar-expand-lg navbar-light">
+    <div class="items-center flex space-x-4">
+        {% for category in categories %}
+            <a href="{% url 'category_detail' category.slug %}">{{category.title}}</a>
+        {% endfor %}
+
+    </div>
+
+</nav>

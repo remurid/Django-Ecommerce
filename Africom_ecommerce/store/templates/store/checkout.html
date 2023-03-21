@@ -1,0 +1,246 @@
+{% extends 'core/layout.html' %}
+
+{% block title %}CheckOut{% endblock %}
+
+{% block body %}
+            <!-- component -->
+    <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/5.3.45/css/materialdesignicons.min.css')</style>
+    <style>
+    
+    .form-radio {
+    -webkit-appearance: none;
+        -moz-appearance: none;
+            appearance: none;
+    -webkit-print-color-adjust: exact;
+            color-adjust: exact;
+    display: inline-block;
+    vertical-align: middle;
+    background-origin: border-box;
+    -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
+    flex-shrink: 0;
+    border-radius: 100%;
+    border-width: 2px;
+    }
+
+    .form-radio:checked {
+    background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3ccircle cx='8' cy='8' r='3'/%3e%3c/svg%3e");
+    border-color: transparent;
+    background-color: currentColor;
+    background-size: 100% 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    }
+
+    @media not print {
+    .form-radio::-ms-check {
+        border-width: 1px;
+        color: transparent;
+        background: inherit;
+        border-color: inherit;
+        border-radius: inherit;
+    }
+    }
+
+    .form-radio:focus {
+    outline: none;
+    }
+
+    .form-select {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23a0aec0'%3e%3cpath d='M15.3 9.3a1 1 0 0 1 1.4 1.4l-4 4a1 1 0 0 1-1.4 0l-4-4a1 1 0 0 1 1.4-1.4l3.3 3.29 3.3-3.3z'/%3e%3c/svg%3e");
+    -webkit-appearance: none;
+        -moz-appearance: none;
+            appearance: none;
+    -webkit-print-color-adjust: exact;
+            color-adjust: exact;
+    background-repeat: no-repeat;
+    padding-top: 0.5rem;
+    padding-right: 2.5rem;
+    padding-bottom: 0.5rem;
+    padding-left: 0.75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    background-position: right 0.5rem center;
+    background-size: 1.5em 1.5em;
+    }
+
+    .form-select::-ms-expand {
+    color: #a0aec0;
+    border: none;
+    }
+
+    @media not print {
+    .form-select::-ms-expand {
+        display: none;
+    }
+    }
+
+    @media print and (-ms-high-contrast: active), print and (-ms-high-contrast: none) {
+    .form-select {
+        padding-right: 0.75rem;
+    }
+    }
+    </style>
+
+    <div class="min-w-screen min-h-screen bg-gray-50 py-5">
+        <div class="px-5">
+            
+            <div class="mb-2">
+                <h1 class="text-3xl md:text-5xl font-bold text-gray-600">Checkout</h1>
+            </div>
+            
+        </div>
+        <div class="w-full bg-white border-t border-b border-gray-200 px-5 py-10 text-gray-800">
+            <div class="w-full">
+                <div class=" md:flex items-start">
+                    <div class="px-3 md:w-7/12 lg:pr-10">
+                        
+                            <div class="rounded-lg ">
+                                {% for item in cart %}
+                                    <div class="justify-between mb-6 rounded-lg bg-white p-6 shadow-md sm:flex sm:justify-start">
+                                        <img src="{{ item.product.get_thumbnail}}" alt="product-image" class="w-full rounded-lg sm:w-40" />
+                                        <div class="sm:ml-4 sm:flex sm:w-full sm:justify-between">
+                                            <div class="mt-5 sm:mt-0">
+                                            <h2 class="text-lg font-bold text-gray-900">{{ item.product.title }}</h2>
+                                            <p class="mt-1 text-xs text-gray-700">{{ item.product.get_display_price }}</p>
+                                            </div>
+                                            <div class="mt-4 flex justify-between sm:space-y-6 sm:mt-0 sm:block sm:space-x-6">
+                                            <div class="flex items-center border-gray-100">
+                                                
+                                                <input class="h-8 w-8 border bg-white text-center text-xs outline-none " disabled type="number" value="{{ item.quantity }}" min="1" />
+                                                
+                                            </div>
+                                            <div class="flex items-center space-x-4">
+                                                <p class="text-sm">259.000 ₭</p>
+                                                  
+                                            </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            <!-- Sub total -->
+                            <div class="mt-6  h-full rounded-lg border bg-white p-6 shadow-md md:mt-0 ">
+                                <div class="mb-2 flex justify-between">
+                                <p class="text-gray-700">Subtotal</p>
+                                <p class="text-gray-700">ETB {{ cart.get_total_cost }}</p>
+                                </div>
+                                <div class="flex justify-between">
+                                <p class="text-gray-700">Shipping</p>
+                                <p class="text-gray-700">ETB 0</p>
+                                </div>
+                                <hr class="my-4" />
+                                <div class="flex justify-between">
+                                <p class="text-lg font-bold">Total</p>
+                                <div class="">
+                                    <p class="mb-1 text-lg font-bold">ETB {{ cart.get_total_cost }}</p>
+                                    <p class="text-sm text-gray-700">including VAT</p>
+                                </div>
+                                </div>
+                                 
+                            </div>
+                        
+                    </div>
+                    
+                    <div class="px-3 md:w-5/12">
+                        <form method="post" action=".">
+                            {% csrf_token %}
+                            <div class="w-full mx-auto rounded-lg bg-white border border-gray-200 p-3 text-gray-800 font-light mb-6">
+                                <div class="w-full flex mb-3 items-center">
+                                    <div class="w-32">
+                                        <span class="text-gray-600 font-semibold">Contact</span>
+                                    </div>
+                                    
+                                </div>
+                                
+    
+    
+                                <div class="grid gap-6 mb-6 md:grid-cols-2">
+                                    <div>
+                                        <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 ">First name</label>
+                                        <input type="text" id="first_name" name="first_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="John" required>
+                                    </div>
+                                    <div>
+                                        <label for="last_name" class="block mb-2 text-sm font-medium text-gray-900 L">Last name</label>
+                                        <input type="text" id="last_name" name="last_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="Doe" required>
+                                    </div>
+                                    <div>
+                                        <label for="company" class="block mb-2 text-sm font-medium text-gray-900 ">Company</label>
+                                        <input type="text" id="company" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="Flowbite" required>
+                                    </div>  
+                                    <div>
+                                        <label for="phone" class="block mb-2 text-sm font-medium text-gray-900 ">Phone number</label>
+                                        <input type="tel" id="phone" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="123-45-678" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}" >
+                                    </div>
+                                    
+                                </div>
+                                 
+                            
+                                <div class="w-full flex items-center">
+                                    <div class="w-32 pb-5">
+                                        <span class="text-gray-600 font-semibold">Billing Address</span>
+                                    </div>
+                    
+                                </div>
+
+                                <div class="grid gap-6 mb-6 md:grid-cols-2">
+                                    
+                                    <div>
+                                        <label for="visitors" class="block mb-2 text-sm font-medium text-gray-900 ">Unique visitors (per month)</label>
+                                        <input type="number" id="visitors" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="" required>
+                                    </div>
+                                
+                                    <div class="mb-6">
+                                        <label for="address" class="block mb-2 text-sm font-medium text-gray-900 ">Address</label>
+                                        <input type="text" id="address" name="address" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="Address" required>
+                                    </div> 
+                                    <div class="mb-6">
+                                        <label for="city" class="block mb-2 text-sm font-medium text-gray-900 ">City</label>
+                                        <input type="text" id="city" name="city" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="Addis Ababa" required>
+                                    </div> 
+                                    
+                                </div>
+                            
+                            
+                                <div class="w-full mx-auto rounded-lg bg-white border border-gray-200 text-gray-800 font-light mb-6">
+                                    <div class="w-full p-3 border-b border-gray-200">
+                                        <div class="mb-5">
+                                            <label for="type1" class="flex items-center cursor-pointer">
+                                                <input type="radio" class="form-radio h-5 w-5 text-indigo-500" name="type" id="type1" >
+                                                <img src="https://leadershipmemphis.org/wp-content/uploads/2020/08/780370.png" class="h-6 ml-3">
+                                            </label>
+                                        </div>
+                                        
+                                    </div>
+                                    <div class="w-full p-3">
+                                        <label for="type2" class="flex items-center cursor-pointer">
+                                            <input type="radio" class="form-radio h-5 w-5 text-indigo-500" name="type" id="type2">
+                                            <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" width="80" class="ml-3"/>
+                                        </label>
+                                    </div>
+                                    
+                                    <div class="w-full p-3">
+                                        <label for="type3" class="flex items-center cursor-pointer">
+                                            <input type="radio" class="form-radio h-5 w-5 text-indigo-500" name="type" id="type3" checked>
+                                            <h1 class="block mb-2 text-sm font-medium text-gray-900 ml-3">Pay Upon Delivery</h1>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div>
+                                    <button type="submit" class="block w-full max-w-xs mx-auto bg-blue-500 hover:bg-blue-700 focus:bg-blue-700 text-white rounded-lg px-3 py-2 font-semibold"><i class="mdi mdi-lock-outline mr-1"></i> PROCCED</button>
+                                </div>
+                            </div> 
+                        </form>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+    
+    
+{% endblock %}
